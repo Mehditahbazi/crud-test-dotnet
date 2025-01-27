@@ -11,8 +11,10 @@
     </ItemGroup>
 
     <ItemGroup>
+        <PackageReference Include="MediatR" Version="12.4.1" />
         <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="8.0.12" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.0.0" />
+        <PackageReference Include="Moq" Version="4.20.72" />
         <PackageReference Include="SpecFlow.Plus.LivingDocPlugin" Version="3.9.57" />
         <PackageReference Include="SpecFlow.NUnit" Version="3.9.22" />
         <PackageReference Include="nunit" Version="3.13.2" />
@@ -22,7 +24,9 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Mc2.CrudTest.Application\Mc2.CrudTest.Application.csproj" />
       <ProjectReference Include="..\Mc2.CrudTest.Domain\Mc2.CrudTest.Domain.csproj" />
+      <ProjectReference Include="..\Mc2.CrudTest.Presentation\Server\Mc2.CrudTest.Presentation.Server.csproj" />
     </ItemGroup>
 
 </Project>

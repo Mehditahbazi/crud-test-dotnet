@@ -1,6 +1,11 @@
-﻿using Mc2.CrudTest.Presentation.Server.Models;
+﻿using CrudTest.Presentation.Server.Controllers;
+using Mc2.CrudTest.Application.Use_Cases;
+using Mc2.CrudTest.Presentation.Server.Models;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.VisualStudio.TestPlatform.TestHost;
+using Moq;
 using System.Net;
 using System.Net.Http.Json;
 using Xunit;
@@ -10,12 +15,15 @@ namespace Mc2.CrudTest.AcceptanceTests.Controllers
     public class CustomersControllerTests : IClassFixture<WebApplicationFactory<Program>>
     {
         private readonly WebApplicationFactory<Program> _factory;
-
-        public CustomersControllerTests(WebApplicationFactory<Program> factory)
+        private readonly Mock<IMediator> _mediatorMock;
+        private readonly CustomersController _controller;
+        public CustomersControllerTests(WebApplicationFactory<Program> factory, Mock<IMediator> mediatorMock)
         {
             _factory = factory;
+            _mediatorMock = mediatorMock;
         }
 
+        #region Create Customer Tests
         [Fact]
         public async Task CreateCustomer_ValidInput_ReturnsCreatedCustomer()
         {
@@ -80,5 +88,43 @@ namespace Mc2.CrudTest.AcceptanceTests.Controllers
 
             Assert.Equal(HttpStatusCode.Conflict, response2.StatusCode);
         }
+        #endregion
+
+        #region Get Customer By ID Tests
+        [Fact]
+        public async Task GetCustomer_ExistingId_ReturnsOkResultWithCustomer()
+        {
+            int customerId = 1;
+            var expectedCustomer = new Customer { Id = customerId, FirstName = "Test", LastName = "Customer" }; // Example Customer
+
+            _mediatorMock.Setup(m => m.Send(It.IsAny<GetCustomerByIdQuery>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(expectedCustomer);
+
+            var result = await _controller.GetCustomerById(customerId);
+
+            var okResult = Assert.IsType<OkObjectResult>(result);
+            var actualCustomer = Assert.IsType<Customer>(okResult.Value);
+            Assert.Equal(expectedCustomer.Id, actualCustomer.Id);
+            Assert.Equal(expectedCustomer.FirstName, actualCustomer.FirstName);
+            Assert.Equal(expectedCustomer.LastName, actualCustomer.LastName);
+            _mediatorMock.Verify(m => m.Send(It.Is<GetCustomerByIdQuery>(q => q.Id == customerId), It.IsAny<CancellationToken>()), Times.Once);
+        }
+
+        [Fact]
+        public async Task GetCustomer_NonExistingId_ReturnsNotFoundResult()
+        {
+            int customerId = 1;
+
+            _mediatorMock.Setup(m => m.Send(It.IsAny<GetCustomerByIdQuery>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync((Customer)null);
+
+            var result = await _controller.GetCustomerById(customerId);
+
+            Assert.IsType<NotFoundResult>(result);
+            _mediatorMock.Verify(m => m.Send(It.Is<GetCustomerByIdQuery>(q => q.Id == customerId), It.IsAny<CancellationToken>()), Times.Once);
+
+        }
     }
+    #endregion
 }
+

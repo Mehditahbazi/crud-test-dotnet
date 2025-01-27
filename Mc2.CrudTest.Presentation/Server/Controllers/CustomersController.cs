@@ -17,11 +17,22 @@ namespace CrudTest.Presentation.Server.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<CustomerDto>> Create(CreateCustomerCommand command)
+        public async Task<ActionResult<CustomerDto>> CreateCustomerAsync(CreateCustomerCommand command)
         {
             var result = await _mediator.Send(command);
-            return CreatedAtAction(nameof(GetById), new { id = result }, result);
+            return CreatedAtAction(nameof(GetCustomerById), new { id = result }, result);
         }
 
+        [HttpGet("{id}")]
+        public async Task<ActionResult<CustomerDto>> GetCustomerById(int id)
+        {
+            var query = new GetCustomerByIdQuery() { Id = id };
+            var result = await _mediator.Send(query);
+            if (result == null)
+            {
+                return NotFound();
+            }
+            return Ok(result);
+        }
     }
 }
