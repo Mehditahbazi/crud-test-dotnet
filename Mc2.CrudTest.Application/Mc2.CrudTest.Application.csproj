@@ -7,7 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MediatR" Version="12.4.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Mc2.CrudTest.Domain\Mc2.CrudTest.Domain.csproj" />
+    <ProjectReference Include="..\Mc2.CrudTest.Infrastructure\Mc2.CrudTest.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
