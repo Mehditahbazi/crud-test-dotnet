@@ -1,8 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using MediatR;
+using System.ComponentModel.DataAnnotations;
 
 namespace Mc2.CrudTest.Application.Use_Cases
 {
-    public class CreateCustomerCommand
+    public class CreateCustomerCommand : IRequest<int>
     {
         [Required]
         [StringLength(50)]
