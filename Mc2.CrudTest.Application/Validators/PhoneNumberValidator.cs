@@ -9,7 +9,7 @@ public static class PhoneNumberValidator
         {
             var phoneUtil = PhoneNumberUtil.GetInstance();
             var number = phoneUtil.Parse(phoneNumber, region);
-            return phoneUtil.IsValidNumber(number) && phoneUtil.GetNumberType(number) == PhoneNumberType.MOBILE;
+            return phoneUtil.IsValidNumber(number) && phoneUtil.GetNumberType(number) == PhoneNumberType.FIXED_LINE_OR_MOBILE;
         }
         catch
         {

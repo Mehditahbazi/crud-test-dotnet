@@ -58,3 +58,9 @@
     Given I have a new customer with an invalid phone number
     When I create the customer
     Then the response should contain an error message "Invalid mobile phone number"
+
+  Scenario: Create a duplicate customer
+    Given I have an existing customer
+    And I try to create another customer with the same FirstName, LastName, and DateOfBirth
+    When I create the customer
+    Then the response should contain an error message "Customer already exists"

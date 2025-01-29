@@ -201,5 +201,35 @@ namespace Mc2.CrudTest.AcceptenceTests.Steps
             var responseContent = await _response.Content.ReadAsStringAsync();
             Assert.Contains(expectedMessage, responseContent);
         }
+
+        [Given(@"I have an existing customer")]
+        public async Task GivenIHaveAnExistingCustomer()
+        {
+            _customerDetails = new
+            {
+                FirstName = "Jane",
+                LastName = "Doe",
+                DateOfBirth = "1992-05-15",
+                PhoneNumber = "+14156667777",
+                Email = "jane.doe@example.com",
+                BankAccountNumber = "987654321"
+            };
+
+            _response = await _driver.CreateCustomerAsync(_customerDetails);
+        }
+
+        [Given(@"I try to create another customer with the same FirstName, LastName, and DateOfBirth")]
+        public void GivenITryToCreateADuplicateCustomer()
+        {
+            _customerDetails = new
+            {
+                FirstName = "Jane",
+                LastName = "Doe",
+                DateOfBirth = "1992-05-15",
+                PhoneNumber = "+14156667777",
+                Email = "jane.duplicate@example.com",
+                BankAccountNumber = "987654322"
+            };
+        }
     }
 }

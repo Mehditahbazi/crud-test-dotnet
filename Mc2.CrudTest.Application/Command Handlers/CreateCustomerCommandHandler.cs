@@ -16,6 +16,9 @@ namespace Mc2.CrudTest.Application.Command_Handlers
 
         public async Task<int> Handle(CreateCustomerCommand request, CancellationToken cancellationToken)
         {
+            if (CustomerValidator.IsDuplicateCustomer(_context, request.FirstName, request.LastName, request.DateOfBirth))
+                throw new ArgumentException("Customer already exists");
+
             if (!PhoneNumberValidator.IsValidMobileNumber(request.PhoneNumber))
                 throw new ArgumentException("Invalid mobile phone number");
 
