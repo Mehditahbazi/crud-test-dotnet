@@ -1,4 +1,5 @@
 ﻿using Mc2.CrudTest.Application.Use_Cases;
+using Mc2.CrudTest.Application.Validators;
 using Mc2.CrudTest.Infrastructure.Persistence;
 using Mc2.CrudTest.Presentation.Server.Models;
 using MediatR;
@@ -15,6 +16,9 @@ namespace Mc2.CrudTest.Application.Command_Handlers
 
         public async Task<int> Handle(CreateCustomerCommand request, CancellationToken cancellationToken)
         {
+            if (!PhoneNumberValidator.IsValidMobileNumber(request.PhoneNumber))
+                throw new ArgumentException("Invalid mobile phone number");
+
             var customer = new Customer
             {
                 FirstName = request.FirstName,

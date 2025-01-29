@@ -53,3 +53,8 @@
     And I retrieve an outdated timestamp for the customer
     When I attempt to delete the customer
     Then the deletion should fail due to concurrency conflict
+
+  Scenario: Create a customer with an invalid phone number
+    Given I have a new customer with an invalid phone number
+    When I create the customer
+    Then the response should contain an error message "Invalid mobile phone number"

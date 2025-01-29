@@ -20,8 +20,16 @@ namespace CrudTest.Presentation.Server.Controllers
         [HttpPost]
         public async Task<ActionResult<CustomerDto>> CreateCustomerAsync(CreateCustomerCommand command)
         {
-            var result = await _mediator.Send(command);
-            return CreatedAtAction(nameof(GetCustomerById), new { id = result }, result);
+            try
+            {
+                var result = await _mediator.Send(command);
+                return CreatedAtAction(nameof(GetCustomerById), new { id = result }, result);
+            }
+            catch (ArgumentException e)
+            {
+                return BadRequest(e.Message);
+            }
+
         }
 
         [HttpGet("GetByEmail/{email}")]

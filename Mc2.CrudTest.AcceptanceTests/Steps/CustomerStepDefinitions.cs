@@ -180,5 +180,26 @@ namespace Mc2.CrudTest.AcceptenceTests.Steps
         {
             _driver.AssertConflict();
         }
+
+        [Given(@"I have a new customer with an invalid phone number")]
+        public void GivenIHaveANewCustomerWithAnInvalidPhoneNumber()
+        {
+            _customerDetails = new
+            {
+                FirstName = "Jane",
+                LastName = "Doe",
+                DateOfBirth = "1992-05-15",
+                PhoneNumber = "12345",
+                Email = "jane.doe@example.com",
+                BankAccountNumber = "987654321"
+            };
+        }
+
+        [Then(@"the response should contain an error message ""(.*)""")]
+        public async Task ThenTheResponseShouldContainAnErrorMessage(string expectedMessage)
+        {
+            var responseContent = await _response.Content.ReadAsStringAsync();
+            Assert.Contains(expectedMessage, responseContent);
+        }
     }
 }

@@ -26,7 +26,8 @@ namespace Mc2.CrudTest.AcceptenceTests.Drivers
         {
             var content = new StringContent(JsonSerializer.Serialize(customer), Encoding.UTF8, "application/json");
             _response = await _httpClient.PostAsync("customers", content);
-            _customerId = JsonSerializer.Deserialize<int>(await _response.Content.ReadAsStringAsync());
+            if (_response.StatusCode == System.Net.HttpStatusCode.OK)
+                _customerId = JsonSerializer.Deserialize<int>(await _response.Content.ReadAsStringAsync());
             return _response;
         }
 
