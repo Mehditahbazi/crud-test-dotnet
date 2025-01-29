@@ -1,4 +1,7 @@
-using Microsoft.AspNetCore.ResponseCompression;
+using Mc2.CrudTest.Application;
+using Mc2.CrudTest.Application.Use_Cases;
+using Mc2.CrudTest.Infrastructure;
+using MediatR;
 
 namespace Mc2.CrudTest.Presentation
 {
@@ -8,10 +11,18 @@ namespace Mc2.CrudTest.Presentation
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
+            {
+                builder.Services
+                    .RegisterApplicationServices()
+                    .RegisterPersistenceServices(builder.Configuration);
+            }
+
+
 
             builder.Services.AddControllersWithViews();
             builder.Services.AddRazorPages();
+            builder.Services.AddScoped<IMediator, Mediator>();
+            builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CreateCustomerCommand).Assembly));
 
             var app = builder.Build();
 

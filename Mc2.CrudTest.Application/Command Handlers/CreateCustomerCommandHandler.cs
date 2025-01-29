@@ -8,7 +8,6 @@ namespace Mc2.CrudTest.Application.Command_Handlers
     public class CreateCustomerCommandHandler : IRequestHandler<CreateCustomerCommand, int>
     {
         private readonly CustomerDbContext _context;
-
         public CreateCustomerCommandHandler(CustomerDbContext context)
         {
             _context = context;
@@ -20,7 +19,10 @@ namespace Mc2.CrudTest.Application.Command_Handlers
             {
                 FirstName = request.FirstName,
                 LastName = request.LastName,
-                Email = request.Email
+                Email = request.Email,
+                BankAccountNumber = request.BankAccountNumber,
+                DateOfBirth = request.DateOfBirth,
+                PhoneNumber = request.PhoneNumber
             };
 
             _context.Customers.Add(customer);
