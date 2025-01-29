@@ -113,7 +113,7 @@ namespace Mc2.CrudTest.AcceptanceTests.Features
                             "Doe",
                             "1990-01-01",
                             "1234567890",
-                            "john.doe@test.com",
+                            "john.doe@GMail.com",
                             "123-456-789"});
 #line 7
     testRunner.Given("the following customer details", ((string)(null)), table1, "Given ");
@@ -156,10 +156,10 @@ namespace Mc2.CrudTest.AcceptanceTests.Features
             {
                 this.ScenarioStart();
 #line 14
-    testRunner.Given("a customer exists with email \"john.doe@test.com\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+    testRunner.Given("a customer exists with email \"john4.doe@yahoo.com\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 15
-    testRunner.When("I retrieve the customer by email \"john.doe@test.com\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+    testRunner.When("I retrieve the customer by email \"john4.doe@yahoo.com\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 16
     testRunner.Then("the customer details should be returned", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");

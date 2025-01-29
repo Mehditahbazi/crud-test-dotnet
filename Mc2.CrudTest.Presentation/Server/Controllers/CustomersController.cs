@@ -23,10 +23,22 @@ namespace CrudTest.Presentation.Server.Controllers
             return CreatedAtAction(nameof(GetCustomerById), new { id = result }, result);
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<CustomerDto>> GetCustomerById(int id)
+        [HttpGet("{Id}")]
+        public async Task<ActionResult<CustomerDto>> GetCustomerById(int Id)
         {
-            var query = new GetCustomerByIdQuery() { Id = id };
+            var query = new GetCustomerByIdQuery() { Id = Id };
+            var result = await _mediator.Send(query);
+            if (result == null)
+            {
+                return NotFound();
+            }
+            return Ok(result);
+        }
+
+        [HttpGet("GetByEmail/{email}")]
+        public async Task<ActionResult<CustomerDto>> GetCustomerByEmail(string email)
+        {
+            var query = new GetCustomerByEmailQuery() { email = email };
             var result = await _mediator.Send(query);
             if (result == null)
             {

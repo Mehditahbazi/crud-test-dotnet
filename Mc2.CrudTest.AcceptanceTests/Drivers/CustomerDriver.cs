@@ -26,7 +26,7 @@ namespace Mc2.CrudTest.AcceptenceTests.Drivers
 
         public async Task<HttpResponseMessage> GetCustomerAsync(string email)
         {
-            return await _httpClient.GetAsync($"customers/{email}");
+            return await _httpClient.GetAsync($"customers/GetByEmail/{email}");
         }
 
         public async Task<HttpResponseMessage> UpdateCustomerAsync(string email, object customer)
