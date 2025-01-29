@@ -21,6 +21,7 @@ namespace Mc2.CrudTest.Infrastructure.Persistence
             modelBuilder.Entity<Customer>().HasIndex(c => c.Email).IsUnique();
             modelBuilder.Entity<Customer>().Property(c => c.PhoneNumber).HasMaxLength(20);
             modelBuilder.Entity<Customer>().Property(c => c.BankAccountNumber).HasMaxLength(50);
+            modelBuilder.Entity<Customer>().Property(c => c.TimeStamp).IsRowVersion().IsConcurrencyToken();
 
             base.OnModelCreating(modelBuilder);
         }

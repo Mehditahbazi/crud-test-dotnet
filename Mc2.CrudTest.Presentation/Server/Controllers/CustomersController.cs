@@ -2,6 +2,7 @@ using Mc2.CrudTest.Application.Use_Cases;
 using Mc2.CrudTest.Shared.DTOs;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace CrudTest.Presentation.Server.Controllers
 {
@@ -23,18 +24,6 @@ namespace CrudTest.Presentation.Server.Controllers
             return CreatedAtAction(nameof(GetCustomerById), new { id = result }, result);
         }
 
-        [HttpGet("{Id}")]
-        public async Task<ActionResult<CustomerDto>> GetCustomerById(int Id)
-        {
-            var query = new GetCustomerByIdQuery() { Id = Id };
-            var result = await _mediator.Send(query);
-            if (result == null)
-            {
-                return NotFound();
-            }
-            return Ok(result);
-        }
-
         [HttpGet("GetByEmail/{email}")]
         public async Task<ActionResult<CustomerDto>> GetCustomerByEmail(string email)
         {
@@ -46,5 +35,52 @@ namespace CrudTest.Presentation.Server.Controllers
             }
             return Ok(result);
         }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetCustomerById(int id)
+        {
+            var result = await _mediator.Send(new GetCustomerByIdQuery() { Id = id });
+            return result != null ? Ok(result) : NotFound();
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateCustomer(UpdateCustomerCommand command)
+        {
+            try
+            {
+                await _mediator.Send(command);
+                return NoContent();
+            }
+            catch (Exception e)
+            {
+                if (e is DbUpdateConcurrencyException)
+                {
+                    return Conflict();
+                }
+                throw;
+            }
+
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteCustomer(DeleteCustomerCommand command)
+        {
+            try
+            {
+                await _mediator.Send(command);
+                return NoContent();
+            }
+            catch (Exception e)
+            {
+
+                if (e is DbUpdateConcurrencyException)
+                {
+                    return Conflict();
+                }
+                throw; ;
+            }
+
+        }
+
     }
 }

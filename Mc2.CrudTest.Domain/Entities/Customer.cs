@@ -28,5 +28,6 @@ namespace Mc2.CrudTest.Presentation.Server.Models
         [Required]
         [StringLength(20)]
         public string BankAccountNumber { get; set; }
+        public byte[] TimeStamp { get; set; }
     }
 }
