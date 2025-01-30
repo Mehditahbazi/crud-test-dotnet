@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Mc2.CrudTest.Shared.DTOs
+namespace Mc2.CrudTest.Application.DTOs
 {
     public class CustomerDto
     {

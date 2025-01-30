@@ -1,5 +1,5 @@
+using Mc2.CrudTest.Application.DTOs;
 using Mc2.CrudTest.Application.Use_Cases;
-using Mc2.CrudTest.Shared.DTOs;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -23,7 +23,7 @@ namespace CrudTest.Presentation.Server.Controllers
             try
             {
                 var result = await _mediator.Send(command);
-                return CreatedAtAction(nameof(GetCustomerById), new { id = result }, result);
+                return CreatedAtAction(nameof(GetCustomerByIdAsync), new { id = result }, result);
             }
             catch (ArgumentException e)
             {
@@ -33,7 +33,7 @@ namespace CrudTest.Presentation.Server.Controllers
         }
 
         [HttpGet("GetByEmail/{email}")]
-        public async Task<ActionResult<CustomerDto>> GetCustomerByEmail(string email)
+        public async Task<ActionResult<CustomerDto>> GetCustomerByEmailAsync(string email)
         {
             var query = new GetCustomerByEmailQuery() { email = email };
             var result = await _mediator.Send(query);
@@ -45,14 +45,14 @@ namespace CrudTest.Presentation.Server.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetCustomerById(int id)
+        public async Task<IActionResult> GetCustomerByIdAsync(int id)
         {
             var result = await _mediator.Send(new GetCustomerByIdQuery() { Id = id });
             return result != null ? Ok(result) : NotFound();
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateCustomer(UpdateCustomerCommand command)
+        public async Task<IActionResult> UpdateCustomerAsync(UpdateCustomerCommand command)
         {
             try
             {
@@ -71,7 +71,7 @@ namespace CrudTest.Presentation.Server.Controllers
         }
 
         [HttpDelete]
-        public async Task<IActionResult> DeleteCustomer(DeleteCustomerCommand command)
+        public async Task<IActionResult> DeleteCustomerAsync(DeleteCustomerCommand command)
         {
             try
             {

@@ -29,7 +29,7 @@ namespace Mc2.CrudTest.Presentation
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
-                app.UseWebAssemblyDebugging();
+
             }
             else
             {
@@ -40,7 +40,6 @@ namespace Mc2.CrudTest.Presentation
 
             app.UseHttpsRedirection();
 
-            app.UseBlazorFrameworkFiles();
             app.UseStaticFiles();
 
             app.UseRouting();
