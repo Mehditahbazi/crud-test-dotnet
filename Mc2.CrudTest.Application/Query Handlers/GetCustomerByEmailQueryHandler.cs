@@ -1,6 +1,6 @@
 ﻿using Mc2.CrudTest.Application.Use_Cases;
+using Mc2.CrudTest.Domain.Entities;
 using Mc2.CrudTest.Infrastructure.Persistence;
-using Mc2.CrudTest.Presentation.Server.Models;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 

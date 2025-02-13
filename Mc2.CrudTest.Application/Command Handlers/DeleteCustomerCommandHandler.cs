@@ -1,27 +1,26 @@
 ﻿using Mc2.CrudTest.Application.Use_Cases;
-using Mc2.CrudTest.Infrastructure.Persistence;
+using Mc2.CrudTest.Domain.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace Mc2.CrudTest.Application.Command_Handlers
 {
-    public class DeleteCustomerCommandHandler : IRequestHandler<DeleteCustomerCommand>
+    public class DeleteCustomerCommandHandler : IRequestHandler<DeleteCustomerCommand, bool>
     {
-        private readonly CustomerDbContext _context;
+        private readonly ICustomerRepository customerRepository;
 
-        public DeleteCustomerCommandHandler(CustomerDbContext context)
+        public DeleteCustomerCommandHandler(ICustomerRepository customerRepository)
         {
-            _context = context;
+            this.customerRepository = customerRepository;
         }
 
-        public async Task Handle(DeleteCustomerCommand request, CancellationToken cancellationToken)
+        public async Task<bool> Handle(DeleteCustomerCommand request, CancellationToken cancellationToken)
         {
-            var customer = await _context.Customers
-                .FirstOrDefaultAsync(c => c.Id == request.Id, cancellationToken);
+            var customer = await customerRepository.GetByIdAsync(request.Id);
 
             if (customer == null)
             {
-                throw new KeyNotFoundException("Customer not found.");
+                throw new InvalidOperationException("Customer not found.");
             }
             var ts = Convert.FromBase64String(request.Timestamp);
             if (!customer.TimeStamp.SequenceEqual(ts))
@@ -29,9 +28,8 @@ namespace Mc2.CrudTest.Application.Command_Handlers
                 throw new DbUpdateConcurrencyException("The record has been modified by another process.");
             }
 
-            _context.Customers.Remove(customer);
-            await _context.SaveChangesAsync(cancellationToken);
-
+            await customerRepository.DeleteAsync(request.Id, ts);
+            return true;
         }
     }
 }

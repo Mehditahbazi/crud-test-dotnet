@@ -1,4 +1,3 @@
-using Mc2.CrudTest.Presentation.Client;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 

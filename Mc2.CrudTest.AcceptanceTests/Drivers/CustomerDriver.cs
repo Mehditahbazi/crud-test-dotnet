@@ -1,11 +1,11 @@
-using Mc2.CrudTest.Presentation;
+using Mc2.CrudTest.Presentation.Server;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Newtonsoft.Json.Linq;
 using System.Text;
 using System.Text.Json;
 using Xunit;
 
-namespace Mc2.CrudTest.AcceptenceTests.Drivers
+namespace Mc2.CrudTest.AcceptanceTests.Drivers
 {
     public class CustomerDriver
     {
@@ -18,7 +18,7 @@ namespace Mc2.CrudTest.AcceptenceTests.Drivers
         {
             var factory = new WebApplicationFactory<Program>();
             _httpClient = factory.CreateClient();
-            _httpClient.BaseAddress = new System.Uri("https://localhost:7045/api/");
+            _httpClient.BaseAddress = new Uri("https://localhost:7045/api/");
 
         }
 

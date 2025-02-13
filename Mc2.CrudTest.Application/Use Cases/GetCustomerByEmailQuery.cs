@@ -1,4 +1,4 @@
-using Mc2.CrudTest.Presentation.Server.Models;
+using Mc2.CrudTest.Domain.Entities;
 using MediatR;
 
 namespace Mc2.CrudTest.Application.Use_Cases

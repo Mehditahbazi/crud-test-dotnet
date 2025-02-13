@@ -4,7 +4,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace CrudTest.Presentation.Server.Controllers
+namespace Mc2.CrudTest.Presentation.Server.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]

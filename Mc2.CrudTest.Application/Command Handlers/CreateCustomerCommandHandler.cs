@@ -1,22 +1,27 @@
 ﻿using Mc2.CrudTest.Application.Use_Cases;
 using Mc2.CrudTest.Application.Validators;
-using Mc2.CrudTest.Infrastructure.Persistence;
-using Mc2.CrudTest.Presentation.Server.Models;
+using Mc2.CrudTest.Domain.Entities;
+using Mc2.CrudTest.Domain.Interfaces;
 using MediatR;
 
 namespace Mc2.CrudTest.Application.Command_Handlers
 {
     public class CreateCustomerCommandHandler : IRequestHandler<CreateCustomerCommand, int>
     {
-        private readonly CustomerDbContext _context;
-        public CreateCustomerCommandHandler(CustomerDbContext context)
+        private readonly ICustomerRepository customerRepository;
+        public CreateCustomerCommandHandler(ICustomerRepository _customerRepository)
         {
-            _context = context;
+            customerRepository = _customerRepository;
         }
 
         public async Task<int> Handle(CreateCustomerCommand request, CancellationToken cancellationToken)
         {
-            if (CustomerValidator.IsDuplicateCustomer(_context, request.FirstName, request.LastName, request.DateOfBirth))
+            if (await customerRepository.ExistsAsync(request.FirstName, request.LastName, request.DateOfBirth))
+            {
+                throw new InvalidOperationException("Customer already exists.");
+            }
+
+            if (CustomerValidator.IsDuplicateCustomer(await customerRepository.GetAllAsync(), request.FirstName, request.LastName, request.DateOfBirth))
                 throw new ArgumentException("Customer already exists");
 
             if (!PhoneNumberValidator.IsValidMobileNumber(request.PhoneNumber))
@@ -32,8 +37,7 @@ namespace Mc2.CrudTest.Application.Command_Handlers
                 PhoneNumber = request.PhoneNumber
             };
 
-            _context.Customers.Add(customer);
-            await _context.SaveChangesAsync(cancellationToken);
+            await customerRepository.AddAsync(customer);
 
             return customer.Id;
         }

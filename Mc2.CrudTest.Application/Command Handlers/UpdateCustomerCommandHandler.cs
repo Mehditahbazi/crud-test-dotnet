@@ -1,25 +1,26 @@
 ﻿using Mc2.CrudTest.Application.Use_Cases;
-using Mc2.CrudTest.Infrastructure.Persistence;
+using Mc2.CrudTest.Domain.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace Mc2.CrudTest.Application.Command_Handlers;
 
-public class UpdateCustomerCommandHandler : IRequestHandler<UpdateCustomerCommand>
+public class UpdateCustomerCommandHandler : IRequestHandler<UpdateCustomerCommand, bool>
 {
-    private readonly CustomerDbContext _context;
-    public UpdateCustomerCommandHandler(CustomerDbContext context)
+    private readonly ICustomerRepository customerRepository;
+
+    public UpdateCustomerCommandHandler(ICustomerRepository customerRepository)
     {
-        _context = context;
+        this.customerRepository = customerRepository;
     }
-    public async Task Handle(UpdateCustomerCommand request, CancellationToken cancellationToken)
+
+    public async Task<bool> Handle(UpdateCustomerCommand request, CancellationToken cancellationToken)
     {
-        var customer = await _context.Customers
-             .FirstOrDefaultAsync(c => c.Id == request.Id, cancellationToken);
+        var customer = await customerRepository.GetByIdAsync(request.Id);
 
         if (customer == null)
         {
-            throw new KeyNotFoundException("Customer not found.");
+            throw new InvalidOperationException("Customer not found.");
         }
 
         var ts = Convert.FromBase64String(request.TimeStamp);
@@ -49,6 +50,7 @@ public class UpdateCustomerCommandHandler : IRequestHandler<UpdateCustomerComman
             customer.BankAccountNumber = request.BankAccountNumber;
 
 
-        await _context.SaveChangesAsync(cancellationToken);
+        await customerRepository.UpdateAsync(customer, ts);
+        return true;
     }
 }

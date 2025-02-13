@@ -1,10 +1,10 @@
 ﻿using FluentAssertions;
-using Mc2.CrudTest.AcceptenceTests.Drivers;
+using Mc2.CrudTest.AcceptanceTests.Drivers;
 using System.Net;
 using System.Text.Json;
 using Xunit;
 
-namespace Mc2.CrudTest.AcceptenceTests.Steps
+namespace Mc2.CrudTest.AcceptanceTests.Steps
 {
     [Binding]
     public class CustomerSteps

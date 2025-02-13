@@ -3,7 +3,7 @@ using Mc2.CrudTest.Application.Use_Cases;
 using Mc2.CrudTest.Infrastructure;
 using MediatR;
 
-namespace Mc2.CrudTest.Presentation
+namespace Mc2.CrudTest.Presentation.Server
 {
     public class Program
     {

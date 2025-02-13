@@ -1,4 +1,4 @@
-﻿using Mc2.CrudTest.Presentation.Server.Models;
+﻿using Mc2.CrudTest.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Mc2.CrudTest.Infrastructure.Persistence
