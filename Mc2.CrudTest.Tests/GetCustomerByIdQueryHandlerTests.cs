@@ -25,7 +25,6 @@ public class GetCustomerByIdQueryHandlerTests
     [Fact]
     public async Task Handle_ShouldReturnCustomer_WhenCustomerExists()
     {
-        // Arrange
         var customer = new Customer
         {
             Id = 1,
@@ -43,10 +42,8 @@ public class GetCustomerByIdQueryHandlerTests
 
         var query = new GetCustomerByIdQuery(customer.Id);
 
-        // Act
         var result = await _handler.Handle(query, CancellationToken.None);
 
-        // Assert
         result.Should().NotBeNull();
         result.Id.Should().Be(customer.Id);
         result.FirstName.Should().Be(customer.FirstName);
@@ -56,7 +53,7 @@ public class GetCustomerByIdQueryHandlerTests
     public async Task Handle_ShouldReturnNull_WhenCustomerDoesNotExist()
     {
 
-        var query = new GetCustomerByIdQuery(99); // Non-existent ID
+        var query = new GetCustomerByIdQuery(99);
 
 
         var result = await _handler.Handle(query, CancellationToken.None);

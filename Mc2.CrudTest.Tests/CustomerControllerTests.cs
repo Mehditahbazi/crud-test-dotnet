@@ -85,7 +85,6 @@ namespace Mc2.CrudTest.Tests
         [Fact]
         public async Task GetCustomer_ExistingCustomerId_ReturnsOkObjectResult()
         {
-            // Arrange
             var customer = new Customer
             {
                 FirstName = "John",
@@ -100,10 +99,8 @@ namespace Mc2.CrudTest.Tests
                 .Setup(m => m.Send(It.IsAny<GetCustomerByIdQuery>(), default))
                 .ReturnsAsync(customer);
 
-            // Act
             var result = await _controller.GetCustomerByIdAsync(0);
 
-            // Assert
             var okObjectResult = Assert.IsType<OkObjectResult>(result);
             var returnedCustomer = Assert.IsType<Customer>(okObjectResult.Value);
             Assert.Equal(customer.Id, returnedCustomer.Id);
@@ -112,7 +109,6 @@ namespace Mc2.CrudTest.Tests
         [Fact]
         public async Task DeleteCustomer_ExistingCustomerId_ReturnsNoContentResult()
         {
-            // Arrange
             var customerId = Guid.NewGuid();
             var deleteCommand = new DeleteCustomerCommand { Id = 1 };
 
@@ -120,10 +116,8 @@ namespace Mc2.CrudTest.Tests
                 .Setup(m => m.Send(It.IsAny<DeleteCustomerCommand>(), default))
                 .ReturnsAsync(true);
 
-            // Act
             var result = await _controller.DeleteCustomerAsync(deleteCommand);
 
-            // Assert
             Assert.IsType<NoContentResult>(result);
         }
     }

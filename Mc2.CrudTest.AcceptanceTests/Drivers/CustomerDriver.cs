@@ -51,7 +51,7 @@ namespace Mc2.CrudTest.AcceptanceTests.Drivers
 
         public async Task RetrieveOutdatedTimestampAsync()
         {
-            _latestTimestamp = Convert.ToBase64String(new byte[] { 1, 2, 3, 4 }); // Simulating an outdated timestamp
+            _latestTimestamp = Convert.ToBase64String(new byte[] { 1, 2, 3, 4 });
         }
 
         public async Task UpdateCustomerAsync(object updateData)

@@ -17,8 +17,6 @@ namespace Mc2.CrudTest.Presentation.Server
                     .RegisterPersistenceServices(builder.Configuration);
             }
 
-
-
             builder.Services.AddControllersWithViews();
             builder.Services.AddRazorPages();
             builder.Services.AddScoped<IMediator, Mediator>();
@@ -43,7 +41,6 @@ namespace Mc2.CrudTest.Presentation.Server
             app.UseStaticFiles();
 
             app.UseRouting();
-
 
             app.MapRazorPages();
             app.MapControllers();

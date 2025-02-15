@@ -7,15 +7,10 @@ namespace Mc2.CrudTest.Tests;
 
 public class CustomerRepositoryTests
 {
-    //private readonly CustomerDbContext _context;
     private readonly Mock<ICustomerRepository> _customerRepositoryMock;
 
     public CustomerRepositoryTests()
     {
-        //var options = new DbContextOptionsBuilder<CustomerDbContext>()
-        //    .UseInMemoryDatabase(databaseName: "TestDb")
-        //    .Options;
-        //_context = new CustomerDbContext(options);
         _customerRepositoryMock = new Mock<ICustomerRepository>();
     }
 

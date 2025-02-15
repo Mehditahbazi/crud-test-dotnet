@@ -112,10 +112,8 @@ public class UpdateCustomerCommandHandlerTests
         _customerRepositoryMock.Setup(repo => repo.GetByIdAsync(existingCustomer.Id))
             .ReturnsAsync(existingCustomer);
 
-        // Act
         Func<Task> act = async () => await _handler.Handle(command, CancellationToken.None);
 
-        // Assert
         await act.Should().ThrowAsync<DbUpdateConcurrencyException>().WithMessage("The record has been modified by another process.");
     }
 }
