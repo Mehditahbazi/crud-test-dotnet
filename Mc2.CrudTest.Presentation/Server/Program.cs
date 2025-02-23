@@ -1,7 +1,8 @@
 using Mc2.CrudTest.Application;
 using Mc2.CrudTest.Application.Use_Cases;
+using Mc2.CrudTest.Domain.Interfaces;
 using Mc2.CrudTest.Infrastructure;
-using MediatR;
+using Mc2.CrudTest.Infrastructure.Repositories;
 
 namespace Mc2.CrudTest.Presentation.Server
 {
@@ -16,18 +17,18 @@ namespace Mc2.CrudTest.Presentation.Server
                     .RegisterApplicationServices()
                     .RegisterPersistenceServices(builder.Configuration);
             }
-
+            builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
             builder.Services.AddControllersWithViews();
             builder.Services.AddRazorPages();
-            builder.Services.AddScoped<IMediator, Mediator>();
+            builder.Services.AddMvc(options =>
+                options.SuppressAsyncSuffixInActionNames = false);
             builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CreateCustomerCommand).Assembly));
 
             var app = builder.Build();
-
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
-
+                app.UseDeveloperExceptionPage();
             }
             else
             {
@@ -42,11 +43,11 @@ namespace Mc2.CrudTest.Presentation.Server
 
             app.UseRouting();
 
-            app.MapRazorPages();
             app.MapControllers();
             app.MapFallbackToFile("index.html");
 
             app.Run();
+
         }
     }
 }

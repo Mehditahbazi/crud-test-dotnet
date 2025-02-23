@@ -112,8 +112,8 @@ namespace Mc2.CrudTest.AcceptanceTests.Features
                             "John",
                             "Doe",
                             "1990-01-01",
-                            "1234567890",
-                            "john12.doe@Mail.com",
+                            "+1-329-420-1792",
+                            "john.doe@Mail.com",
                             "123-456-789"});
 #line 7
     testRunner.Given("the following customer details", ((string)(null)), table1, "Given ");
@@ -156,10 +156,10 @@ namespace Mc2.CrudTest.AcceptanceTests.Features
             {
                 this.ScenarioStart();
 #line 14
-    testRunner.Given("a customer exists with email \"john12.doe@yahoo.com\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+    testRunner.Given("a customer exists with email \"john.doe@rayankar.com\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 15
-    testRunner.When("I retrieve the customer by email \"john12.doe@yahoo.com\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+    testRunner.When("I retrieve the customer by email \"john.doe@rayankar.com\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 16
     testRunner.Then("the customer details should be returned", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
@@ -196,10 +196,10 @@ namespace Mc2.CrudTest.AcceptanceTests.Features
             {
                 this.ScenarioStart();
 #line 19
-    testRunner.Given("a customer exists with ID 2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+    testRunner.Given("a customer exists with ID 101", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 20
-    testRunner.When("I request the customer by ID 2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+    testRunner.When("I request the customer by ID 102", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 21
     testRunner.Then("the response should contain the customer details", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
@@ -246,7 +246,7 @@ namespace Mc2.CrudTest.AcceptanceTests.Features
                             "John",
                             "Doe",
                             "1990-01-01",
-                            "1234567890",
+                            "+1-329-420-1792",
                             "john20@example.com",
                             "123456789"});
 #line 24
@@ -311,7 +311,7 @@ namespace Mc2.CrudTest.AcceptanceTests.Features
                             "John",
                             "Doe",
                             "1990-01-01",
-                            "1234567890",
+                            "+1-329-420-1792",
                             "john22@example.com",
                             "123456789"});
 #line 34
@@ -368,7 +368,7 @@ namespace Mc2.CrudTest.AcceptanceTests.Features
                             "Jane",
                             "Doe",
                             "1995-05-15",
-                            "1234567890",
+                            "+1-329-420-1792",
                             "jane2@example.com",
                             "987654321"});
 #line 42
@@ -422,11 +422,11 @@ namespace Mc2.CrudTest.AcceptanceTests.Features
                             "Email",
                             "BankAccountNumber"});
                 table6.AddRow(new string[] {
-                            "Jane",
-                            "Doe",
+                            "Jane1",
+                            "Doe1",
                             "1995-05-15",
-                            "1234567890",
-                            "jane3@example.com",
+                            "+1-329-420-1792",
+                            "jane1@example.com",
                             "987654321"});
 #line 50
     testRunner.Given("a customer exists with the following details:", ((string)(null)), table6, "Given ");

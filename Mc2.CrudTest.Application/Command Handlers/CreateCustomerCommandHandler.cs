@@ -16,16 +16,17 @@ namespace Mc2.CrudTest.Application.Command_Handlers
 
         public async Task<int> Handle(CreateCustomerCommand request, CancellationToken cancellationToken)
         {
-            if (await customerRepository.ExistsAsync(request.FirstName, request.LastName, request.DateOfBirth))
-            {
-                throw new InvalidOperationException("Customer already exists.");
-            }
 
-            if (CustomerValidator.IsDuplicateCustomer(await customerRepository.GetAllAsync(), request.FirstName, request.LastName, request.DateOfBirth))
-                throw new ArgumentException("Customer already exists");
+            //if (CustomerValidator.IsDuplicateCustomer(await customerRepository.GetAllAsync(), request.FirstName, request.LastName, request.DateOfBirth))
+            //    throw new ArgumentException("Customer already exists");
 
             if (!PhoneNumberValidator.IsValidMobileNumber(request.PhoneNumber))
                 throw new ArgumentException("Invalid mobile phone number");
+
+            if (await customerRepository.ExistsAsync(request.FirstName, request.LastName, request.DateOfBirth, request.Email))
+            {
+                throw new InvalidOperationException("Customer already exists.");
+            }
 
             var customer = new Customer
             {

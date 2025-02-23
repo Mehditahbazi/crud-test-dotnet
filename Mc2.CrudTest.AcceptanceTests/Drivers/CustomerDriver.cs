@@ -1,3 +1,4 @@
+using Mc2.CrudTest.Application.DTOs;
 using Mc2.CrudTest.Presentation.Server;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Newtonsoft.Json.Linq;
@@ -27,7 +28,12 @@ namespace Mc2.CrudTest.AcceptanceTests.Drivers
             var content = new StringContent(JsonSerializer.Serialize(customer), Encoding.UTF8, "application/json");
             _response = await _httpClient.PostAsync("customers", content);
             if (_response.StatusCode == System.Net.HttpStatusCode.OK)
-                _customerId = JsonSerializer.Deserialize<int>(await _response.Content.ReadAsStringAsync());
+            {
+                var jsonResponse = await _response.Content.ReadAsStringAsync();
+                JsonSerializerOptions options = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
+                CustomerDto resCustomer = JsonSerializer.Deserialize<CustomerDto>(jsonResponse, options);
+                _customerId = resCustomer.Id;
+            }
             return _response;
         }
 

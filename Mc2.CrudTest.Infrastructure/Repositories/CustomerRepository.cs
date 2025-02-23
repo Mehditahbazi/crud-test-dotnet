@@ -16,7 +16,7 @@ namespace Mc2.CrudTest.Infrastructure.Repositories
 
         public async Task<int> AddAsync(Customer customer)
         {
-            if (await ExistsAsync(customer.FirstName, customer.LastName, customer.DateOfBirth))
+            if (await ExistsAsync(customer.FirstName, customer.LastName, customer.DateOfBirth, customer.Email))
                 throw new InvalidOperationException("Customer already exists.");
 
             _context.Customers.Add(customer);
@@ -24,10 +24,10 @@ namespace Mc2.CrudTest.Infrastructure.Repositories
             return customer.Id;
         }
 
-        public async Task<bool> ExistsAsync(string firstName, string lastName, DateTime dateOfBirth)
+        public async Task<bool> ExistsAsync(string firstName, string lastName, DateTime dateOfBirth, string email)
         {
             return await _context.Customers
-                .AnyAsync(c => c.FirstName == firstName && c.LastName == lastName && c.DateOfBirth == dateOfBirth);
+                .AnyAsync(c => c.FirstName == firstName && c.LastName == lastName && c.DateOfBirth == dateOfBirth && c.Email == email);
         }
 
         public async Task<Customer> GetByIdAsync(int id)

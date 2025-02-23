@@ -36,9 +36,9 @@ public class CreateCustomerCommandHandlerTests
     [Fact]
     public async Task Handle_Should_Throw_Exception_When_Customer_Exists()
     {
-        var command = new CreateCustomerCommand("John", "Doe", DateTime.Parse("1990-01-01"), "+14185438090", "john.doe@email.com", "123456789012");
+        var command = new CreateCustomerCommand("John", "Doe", DateTime.Parse("1990-01-01"), "john.doe@email.com", "+14185438090", "123456789012");
 
-        _customerRepositoryMock.Setup(repo => repo.ExistsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<DateTime>()))
+        _customerRepositoryMock.Setup(repo => repo.ExistsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<DateTime>(), It.IsAny<string>()))
             .ReturnsAsync(true);
 
         await FluentActions.Invoking(() => _handler.Handle(command, CancellationToken.None))

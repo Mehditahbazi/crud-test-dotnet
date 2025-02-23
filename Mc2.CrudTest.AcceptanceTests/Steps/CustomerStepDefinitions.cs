@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using Mc2.CrudTest.AcceptanceTests.Drivers;
+using Mc2.CrudTest.Application.Use_Cases;
 using System.Net;
 using System.Text.Json;
 using Xunit;
@@ -10,7 +11,7 @@ namespace Mc2.CrudTest.AcceptanceTests.Steps
     public class CustomerSteps
     {
         private readonly CustomerDriver _driver;
-        private object _customerDetails;
+        private CreateCustomerCommand _customerDetails;
         private HttpResponseMessage _response;
 
         public CustomerSteps()
@@ -22,7 +23,7 @@ namespace Mc2.CrudTest.AcceptanceTests.Steps
         public void GivenTheFollowingCustomerDetails(Table table)
         {
             var row = table.Rows[0];
-            _customerDetails = new
+            _customerDetails = new CreateCustomerCommand
             {
                 FirstName = row["FirstName"],
                 LastName = row["LastName"],
@@ -49,12 +50,12 @@ namespace Mc2.CrudTest.AcceptanceTests.Steps
         [Given(@"a customer exists with email ""(.*)""")]
         public async Task GivenACustomerExistsWithEmail(string email)
         {
-            _customerDetails = new
+            _customerDetails = new CreateCustomerCommand
             {
                 FirstName = "John",
                 LastName = "Doe",
                 DateOfBirth = DateTime.Parse("1990-01-01"),
-                PhoneNumber = "1234567890",
+                PhoneNumber = "+1-329-420-1792",
                 Email = email,
                 BankAccountNumber = "123-456-789"
             };
@@ -101,11 +102,11 @@ namespace Mc2.CrudTest.AcceptanceTests.Steps
         [Given(@"a customer exists with the following details:")]
         public async Task GivenACustomerExistsWithTheFollowingDetails(Table table)
         {
-            var customer = new
+            var customer = new CreateCustomerCommand
             {
                 FirstName = table.Rows[0]["FirstName"],
                 LastName = table.Rows[0]["LastName"],
-                DateOfBirth = table.Rows[0]["DateOfBirth"],
+                DateOfBirth = DateTime.Parse(table.Rows[0]["DateOfBirth"]),
                 PhoneNumber = table.Rows[0]["PhoneNumber"],
                 Email = table.Rows[0]["Email"],
                 BankAccountNumber = table.Rows[0]["BankAccountNumber"]
@@ -184,13 +185,13 @@ namespace Mc2.CrudTest.AcceptanceTests.Steps
         [Given(@"I have a new customer with an invalid phone number")]
         public void GivenIHaveANewCustomerWithAnInvalidPhoneNumber()
         {
-            _customerDetails = new
+            _customerDetails = new CreateCustomerCommand
             {
-                FirstName = "Jane",
-                LastName = "Doe",
-                DateOfBirth = "1992-05-15",
+                FirstName = "Jane123",
+                LastName = "Doe321",
+                DateOfBirth = DateTime.Parse("1992-05-15"),
                 PhoneNumber = "12345",
-                Email = "jane.doe@example.com",
+                Email = "jane.doe123221@example.com",
                 BankAccountNumber = "987654321"
             };
         }
@@ -205,11 +206,11 @@ namespace Mc2.CrudTest.AcceptanceTests.Steps
         [Given(@"I have an existing customer")]
         public async Task GivenIHaveAnExistingCustomer()
         {
-            _customerDetails = new
+            _customerDetails = new CreateCustomerCommand
             {
                 FirstName = "Jane",
                 LastName = "Doe",
-                DateOfBirth = "1992-05-15",
+                DateOfBirth = DateTime.Parse("1992-05-15"),
                 PhoneNumber = "+14156667777",
                 Email = "jane.doe@example.com",
                 BankAccountNumber = "987654321"
@@ -221,11 +222,11 @@ namespace Mc2.CrudTest.AcceptanceTests.Steps
         [Given(@"I try to create another customer with the same FirstName, LastName, and DateOfBirth")]
         public void GivenITryToCreateADuplicateCustomer()
         {
-            _customerDetails = new
+            _customerDetails = new CreateCustomerCommand
             {
                 FirstName = "Jane",
                 LastName = "Doe",
-                DateOfBirth = "1992-05-15",
+                DateOfBirth = DateTime.Parse("1992-05-15"),
                 PhoneNumber = "+14156667777",
                 Email = "jane.duplicate@example.com",
                 BankAccountNumber = "987654322"

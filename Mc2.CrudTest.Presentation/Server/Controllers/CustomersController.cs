@@ -23,7 +23,8 @@ namespace Mc2.CrudTest.Presentation.Server.Controllers
             try
             {
                 var result = await _mediator.Send(command);
-                return CreatedAtAction(nameof(GetCustomerByIdAsync), new { id = result }, result);
+
+                return new CustomerDto() { Id = result };
             }
             catch (ArgumentException e)
             {

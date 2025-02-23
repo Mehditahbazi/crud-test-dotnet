@@ -37,7 +37,7 @@ namespace Mc2.CrudTest.Tests
             );
 
             _customerRepositoryMock
-                .Setup(repo => repo.ExistsAsync("John", "Doe", new DateTime(1980, 1, 1)))
+                .Setup(repo => repo.ExistsAsync("John", "Doe", new DateTime(1980, 1, 1), "john.doe1990@test.com"))
                 .ReturnsAsync(true);
 
             _mediatorMock
@@ -53,7 +53,8 @@ namespace Mc2.CrudTest.Tests
                 .Setup(repo => repo.ExistsAsync(
                     It.Is<string>(fn => fn == "John"),
                     It.Is<string>(ln => ln == "Doe"),
-                    It.Is<DateTime>(dob => dob.Date == new DateTime(1980, 1, 1).Date)
+                    It.Is<DateTime>(dob => dob.Date == new DateTime(1980, 1, 1).Date),
+                    It.Is<string>(em => em == "john.doe1990@test.com")
                 ))
                 .ReturnsAsync(true);
         }
