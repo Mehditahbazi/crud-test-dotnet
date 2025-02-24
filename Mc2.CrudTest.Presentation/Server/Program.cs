@@ -20,6 +20,12 @@ namespace Mc2.CrudTest.Presentation.Server
             builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
             builder.Services.AddControllersWithViews();
             builder.Services.AddRazorPages();
+
+            builder.Services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "Customer API", Version = "v1" });
+            });
+
             builder.Services.AddMvc(options =>
                 options.SuppressAsyncSuffixInActionNames = false);
             builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CreateCustomerCommand).Assembly));
@@ -36,6 +42,12 @@ namespace Mc2.CrudTest.Presentation.Server
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Custoemr API V1");
+                c.RoutePrefix = string.Empty;
+            });
 
             app.UseHttpsRedirection();
 
