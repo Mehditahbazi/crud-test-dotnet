@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
 namespace Mc2.CrudTest.Presentation.Client
 {
+
+
     public class Program
     {
         public static async Task Main(string[] args)
