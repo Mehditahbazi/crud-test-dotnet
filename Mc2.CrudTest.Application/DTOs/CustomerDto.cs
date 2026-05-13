@@ -2,6 +2,7 @@
 
 namespace Mc2.CrudTest.Application.DTOs
 {
+
     public class CustomerDto
     {
         public int Id { get; set; }
